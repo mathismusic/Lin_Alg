@@ -4,10 +4,10 @@
 
 //template <class T>
 class Vector : public std::vector<double>{
-
-
-
-
+public:
+    Vector(){}
+    Vector(std::initializer_list<double> init): std::vector<double>{init}
+    {}
 };
 
 inline void print(const Vector &v){
