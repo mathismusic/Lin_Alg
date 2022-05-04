@@ -4,6 +4,10 @@
 
 //template <class T>
 class Vector : public std::vector<double>{
+
+
+
+
 };
 
 inline void print(const Vector &v){
@@ -16,3 +20,5 @@ inline void print(const Vector &v){
     }
     std::cout<<']'<<endl;
 }
+
+inline int len(const Vector &v){ return size(); }
