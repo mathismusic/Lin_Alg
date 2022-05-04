@@ -147,7 +147,7 @@ inline int dim(const Vector &v){ return v.size(); }
 
 inline const Vector &normalize(Vector &v){
     double norm_ = v.norm();
-    for (double &component: v)
+    for (auto &component: v)
         component = component / norm_;
     return v;
 } 
