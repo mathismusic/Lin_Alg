@@ -60,7 +60,7 @@ public:
     {
         if (size()!=v.size())
         {
-            std::cerr<<"Invalid addition"<<std::endl;
+            std::cerr<<"Invalid subtraction"<<std::endl;
             throw 0;
         }
         Vector diff(size());
@@ -102,7 +102,7 @@ public:
     const Vector &operator-=(const Vector &other){
         if (size()!=v.size())
         {
-            std::cerr<<"Invalid addition"<<std::endl;
+            std::cerr<<"Invalid subtraction"<<std::endl;
             throw 0;
         }
         for (int i = 0; i < size(); i++)
