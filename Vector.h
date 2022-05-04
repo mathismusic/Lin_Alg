@@ -72,6 +72,10 @@ public:
     }
 };
 
+Vector operator*(double factor, const Vector &v){
+    return v * factor;
+}
+
 inline void print(const Vector &v){
     std::cout<<'[';
     for(auto it = v.begin(); it != v.end(); it++)
