@@ -41,7 +41,7 @@ public:
         return res;
     }
 
-    Vector operator + (const Vector &v)
+    Vector operator + (const Vector &v) const
     {
         if (size()!=v.size())
         {
@@ -56,7 +56,7 @@ public:
         return sum;
     }
 
-    Vector operator - (const Vector &v)
+    Vector operator - (const Vector &v) const
     {
         if (size()!=v.size())
         {
@@ -71,7 +71,7 @@ public:
         return diff;
     }
 
-    Vector operator *(double d)
+    Vector operator *(double d) const
     {
         Vector v(size());
         for (int i{0};i<size();i++)
@@ -79,7 +79,7 @@ public:
         return v;
     }
 
-    Vector operator /(double d)
+    Vector operator /(double d) const
     {
         if (fabs(d)<EPSILON)
         {
@@ -89,24 +89,24 @@ public:
         return (*this)*(1/d);
     }
 
-    const Vector &operator+=(const Vector &other){
+    const Vector &operator+=(const Vector &v){
         if (size()!=v.size())
         {
             std::cerr<<"Invalid addition"<<std::endl;
             throw 0;
         }
         for (int i = 0; i < size(); i++)
-            at(i) = at(i) + other.at(i);
+            at(i) = at(i) + v.at(i);
         return *this;
     }
-    const Vector &operator-=(const Vector &other){
+    const Vector &operator-=(const Vector &v){
         if (size()!=v.size())
         {
             std::cerr<<"Invalid subtraction"<<std::endl;
             throw 0;
         }
         for (int i = 0; i < size(); i++)
-            at(i) = at(i) - other.at(i);
+            at(i) = at(i) - v.at(i);
         return *this;
     }
     const Vector &operator*=(double factor){
