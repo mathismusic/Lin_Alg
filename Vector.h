@@ -12,7 +12,7 @@ public:
     {}
     Vector(int n): std::vector<double>(n){}
     
-    double dot(const Vector &v)
+    double dot(const Vector &v) const
     {
         if (this->size()!=v.size())
         {
@@ -25,11 +25,20 @@ public:
         return pdt;
     }
 
-    inline double norm(int k=2){
+    inline double norm(int k=2) const{
         double res = 0;
         for (int i = 0; i < size(); i++)
             res += std::pow(at(i), k);
         return pow(res, 1.0/k);
+    }
+    inline bool isZero() const{ return norm() != 0; }
+
+    Vector normalize(int k=2) const{
+        Vector res(size());
+        double norm_ = norm(k);
+        for (int i = 0; i < size(); i++)
+            res[i] = at(i)/norm_;
+        return res;
     }
 };
 
