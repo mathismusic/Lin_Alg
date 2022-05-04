@@ -22,3 +22,4 @@ inline void print(const Vector &v){
 }
 
 inline int len(const Vector &v){ return size(); }
+inline int dimension(const Vector &v){ return size(); }
