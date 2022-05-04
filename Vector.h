@@ -8,10 +8,10 @@ class Vector : public std::vector<double>{
 
 inline void print(const Vector &v){
     std::cout<<'[';
-    for(auto i: v)
+    for(auto it = v.begin(); it != v.end(); it++)
     {
         std::cout<<i;
-        if(&i+1!=v.end())
+        if(it + 1 != v.end())
             std::cout<<',';
     }
     std::cout<<']'<<endl;
