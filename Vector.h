@@ -10,9 +10,9 @@ inline void print(const Vector &v){
     std::cout<<'[';
     for(auto it = v.begin(); it != v.end(); it++)
     {
-        std::cout<<i;
+        std::cout << *it;
         if(it + 1 != v.end())
-            std::cout<<',';
+            std::cout << ", ";
     }
     std::cout<<']'<<endl;
 }
