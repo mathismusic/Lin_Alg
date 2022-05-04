@@ -63,13 +63,18 @@ public:
             std::cerr<<"Invalid addition"<<std::endl;
             throw 0;
         }
-        Vector sum(size());
+        Vector diff(size());
         for(int i{0};i<size();i++)
         {
-            sum.at(i) = at(i)-v.at(i);
+            diff.at(i) = at(i)-v.at(i);
         }
-        return sum;
+        return diff;
     }
+
+    Vector operator+=(const Vector &other){ return (*this) + other; }
+    Vector operator-=(const Vector &other){ return (*this) - other; }
+    Vector operator*=(double factor){ return (*this) * factor; }
+    Vector operator/=(double factor){ return (*this) / factor; }
 };
 
 Vector operator*(double factor, const Vector &v){
