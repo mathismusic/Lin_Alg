@@ -31,7 +31,7 @@ public:
             res += std::pow(at(i), k);
         return pow(res, 1.0/k);
     }
-    inline bool isZero() const{ return (abs(norm()) < EPSILON); }
+    inline bool isZero() const{ return (std::abs(norm()) < EPSILON); }
 
     Vector normalize(int k=2) const{
         Vector res(size());
