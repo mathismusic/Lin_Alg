@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include <cmath>
 
 //template <class T>
 class Vector : public std::vector<double>{
@@ -8,6 +8,9 @@ public:
     Vector(){}
     Vector(std::initializer_list<double> init): std::vector<double>{init}
     {}
+    Vector(int n): std::vector<double>(n){}
+
+
 };
 
 inline void print(const Vector &v){
