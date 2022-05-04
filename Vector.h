@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 
-#define EPSILON = pow(10,-10)
+#define EPSILON 1e-10
 
 //template <class T>
 class Vector : public std::vector<double>{
@@ -31,7 +31,7 @@ public:
             res += std::pow(at(i), k);
         return pow(res, 1.0/k);
     }
-    inline bool isZero() const{ return norm() != 0; }
+    inline bool isZero() const{ return (abs(norm()) < EPSILON); }
 
     Vector normalize(int k=2) const{
         Vector res(size());
