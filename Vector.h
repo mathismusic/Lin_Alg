@@ -4,13 +4,13 @@
 
 //template <class T>
 class Vector : public std::vector<double>{
-
 };
 
-inline void print(const Vector &v){
-    for (const double &component : v){
-        std::cout.width(12); // need to set after every << call else default(of 0)is taken
-        std::cout << component;
+inline void print(Vector &v){
+    std::cout<<'[';
+    for(auto i: v)
+    {
+        std::cout<<i<<',';
     }
-    std::cout << std::endl;
+    std::cout<<']'<<endl;
 }
