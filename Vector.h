@@ -55,6 +55,21 @@ public:
         }
         return sum;
     }
+
+    Vector operator - (const Vector &v)
+    {
+        if (size()!=v.size())
+        {
+            std::cerr<<"Invalid addition"<<std::endl;
+            throw 0;
+        }
+        Vector sum(size());
+        for(int i{0};i<size();i++)
+        {
+            sum.at(i) = at(i)-v.at(i);
+        }
+        return sum;
+    }
 };
 
 inline void print(const Vector &v){
