@@ -71,6 +71,10 @@ public:
         return diff;
     }
 
+    Vector &operator+=(const Vector &other){ return *this = (*this) + other; }
+    Vector &operator-=(const Vector &other){ return *this = (*this) - other; }
+    Vector operator*=(double factor){ return *this = (*this) * factor; }
+    Vector operator/=(double factor){ return *this = (*this) / factor; }
     Vector operator *(double d)
     {
         Vector v(size());
@@ -88,10 +92,6 @@ public:
         }
         return (*this)*(1/d);
     }
-    Vector operator+=(const Vector &other){ return (*this) + other; }
-    Vector operator-=(const Vector &other){ return (*this) - other; }
-    Vector operator*=(double factor){ return (*this) * factor; }
-    Vector operator/=(double factor){ return (*this) / factor; }
 };
 
 Vector operator*(double factor, const Vector &v){
