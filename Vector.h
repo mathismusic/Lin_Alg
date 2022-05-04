@@ -89,10 +89,31 @@ public:
         return (*this)*(1/d);
     }
 
-    Vector &operator+=(const Vector &other){ return *this = (*this) + other; }
-    Vector &operator-=(const Vector &other){ return *this = (*this) - other; }
-    Vector operator*=(double factor){ return *this = (*this) * factor; }
-    Vector operator/=(double factor){ return *this = (*this) / factor; }
+    const Vector &operator+=(const Vector &other){
+        for (int i = 0; i < size(); i++)
+            at(i) = at(i) + other.at(i);
+        return *this;
+    }
+    const Vector &operator-=(const Vector &other){
+        for (int i = 0; i < size(); i++)
+            at(i) = at(i) - other.at(i);
+        return *this;
+    }
+    const Vector &operator*=(double factor){
+        for (int i = 0; i < size(); i++)
+            at(i) = at(i) * factor;
+        return *this;
+    }
+    const Vector &operator/=(double factor){
+        if (fabs(factor)<EPSILON)
+        {
+            std::cerr<<"Division by 0"<<std::endl;
+            throw 0;
+        }
+        for (int i = 0; i < size(); i++)
+            at(i) = at(i) / factor;
+        return *this;
+    }
     
 };
 
