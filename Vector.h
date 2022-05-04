@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 
+#define EPSILON = pow(10,-10)
+
 //template <class T>
 class Vector : public std::vector<double>{
 public:
