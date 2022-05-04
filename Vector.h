@@ -9,7 +9,18 @@ public:
     Vector(std::initializer_list<double> init): std::vector<double>{init}
     {}
     Vector(int n): std::vector<double>(n){}
-
+    double dot(const Vector &v)
+    {
+        if (this->size()!=v.size())
+        {
+            std::cerr<<"Invalid dot product"<<std::endl;
+            throw 0;
+        }
+        double pdt{0};
+        for(int i{0};i<v.size();i++)
+            pdt+=(this->at(i))*(v.at(i));
+        return pdt;
+    }
 
 };
 
