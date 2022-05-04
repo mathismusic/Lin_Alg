@@ -90,11 +90,21 @@ public:
     }
 
     const Vector &operator+=(const Vector &other){
+        if (size()!=v.size())
+        {
+            std::cerr<<"Invalid addition"<<std::endl;
+            throw 0;
+        }
         for (int i = 0; i < size(); i++)
             at(i) = at(i) + other.at(i);
         return *this;
     }
     const Vector &operator-=(const Vector &other){
+        if (size()!=v.size())
+        {
+            std::cerr<<"Invalid addition"<<std::endl;
+            throw 0;
+        }
         for (int i = 0; i < size(); i++)
             at(i) = at(i) - other.at(i);
         return *this;

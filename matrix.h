@@ -2,10 +2,7 @@
 #include <vector>
 
 
-<<<<<<< HEAD
-=======
 //template <class T>
->>>>>>> 84574edf60b507971be0c7ef15993dfbf7abc3f8
 class Vector : public std::vector<double>{
 
 };
