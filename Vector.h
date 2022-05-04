@@ -33,7 +33,7 @@ public:
     }
     inline bool isZero() const{ return (std::abs(norm()) < EPSILON); }
 
-    Vector normalize(int k=2) const{
+    Vector unit(int k=2) const{
         Vector res(size());
         double norm_ = norm(k);
         for (int i = 0; i < size(); i++)
@@ -144,3 +144,10 @@ inline void print(const Vector &v){
 
 inline int len(const Vector &v){ return v.size(); }
 inline int dim(const Vector &v){ return v.size(); }
+
+inline const Vector &normalize(Vector &v){
+    double norm_ = v.norm();
+    for (double &component: v)
+        component = component / norm_;
+    return v;
+} 
