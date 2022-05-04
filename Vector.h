@@ -71,6 +71,23 @@ public:
         return diff;
     }
 
+    Vector operator *(double d)
+    {
+        Vector v(size());
+        for (int i{0};i<size();i++)
+            v.at(i) = d*at(i);
+        return v;
+    }
+
+    Vector operator /(double d)
+    {
+        if (fabs(d)<EPSILON)
+        {
+            std::cerr<<"Division by 0"<<std::endl;
+            throw 0;
+        }
+        return (*this)*(1/d);
+    }
     Vector operator+=(const Vector &other){ return (*this) + other; }
     Vector operator-=(const Vector &other){ return (*this) - other; }
     Vector operator*=(double factor){ return (*this) * factor; }
