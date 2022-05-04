@@ -9,6 +9,7 @@ public:
     Vector(std::initializer_list<double> init): std::vector<double>{init}
     {}
     Vector(int n): std::vector<double>(n){}
+    
     double dot(const Vector &v)
     {
         if (this->size()!=v.size())
@@ -22,6 +23,12 @@ public:
         return pdt;
     }
 
+    inline double norm(int k=2){
+        double res = 0;
+        for (int i = 0; i < size(); i++)
+            res += std::pow(at(i), k);
+        return pow(res, 1.0/k);
+    }
 };
 
 inline void print(const Vector &v){
@@ -32,8 +39,8 @@ inline void print(const Vector &v){
         if(it + 1 != v.end())
             std::cout << ", ";
     }
-    std::cout<<']'<<endl;
+    std::cout<<']'<< std::endl;
 }
 
-inline int len(const Vector &v){ return size(); }
-inline int dim(const Vector &v){ return size(); }
+inline int len(const Vector &v){ return v.size(); }
+inline int dim(const Vector &v){ return v.size(); }
