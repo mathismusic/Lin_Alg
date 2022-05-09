@@ -19,3 +19,16 @@ public:
         return std::pair<int,int> (at(0).size(), size());
     }
 };
+
+inline void print(const Matrix &m){
+    if (m.size() == 0) return;
+    for (int i = 0; i < m.at(0).size(); i++){
+        std::cout << '[';
+        for(int j = 0; j < m.size(); j++){
+            std::cout << m.at(j).at(i);
+            if (j != m.size() - 1) 
+                std::cout << ", ";
+        }
+        std::cout << "]\n";
+    }
+}
