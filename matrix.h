@@ -18,6 +18,15 @@ public:
             return std::pair<int,int> (0,0);
         return std::pair<int,int> (at(0).size(), size());
     }
+    double at(int i, int j)
+    {
+        if(i<0||i>=at(0).size()||j<0||j>=size())
+        {
+            std::cerr<<"index out of bounds"<<std::endl;
+            throw 0;
+        }
+        return at(j).at(i);
+    }
 };
 
 inline void print(const Matrix &m){
