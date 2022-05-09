@@ -10,7 +10,7 @@ public:
     {}
     Matrix(std::initializer_list<std::initializer_list<double> > init){
         for (int i = 0; i < init.size(); i++)
-            at(i) = Vector(*(init.begin() + i));
+            push_back(Vector(*(init.begin() + i)));
     }
     std::pair<int,int> order()
     {
