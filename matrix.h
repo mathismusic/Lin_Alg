@@ -12,4 +12,10 @@ public:
         for (int i = 0; i < init.size(); i++)
             at(i) = Vector(*(init.begin() + i));
     }
+    std::pair<int,int> order()
+    {
+        if(size()==0)
+            return std::pair<int,int> (0,0);
+        return std::pair<int,int> (at(0).size(), size());
+    }
 };
