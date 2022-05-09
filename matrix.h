@@ -2,6 +2,17 @@
 #include <vector>
 #include "Vector.h"
 
+// General:
+// change ref to not scale to 1.
+// functions to perform ERMs
+// rank. add, subtr, scalar mult, solving linear equations, Gram Schmidt
+
+// class for Square: inherit from General
+// Determinant from ref storing the sign for swaps
+// inverse by rref(A|I)
+// adjugate from inverse if rank=n, if rank<n-1 then 0, rank = n-1 -> calculate each coeff, O(n^5)
+// 
+
 
 class Matrix : public std::vector<Vector>{
 public:
