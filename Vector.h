@@ -125,6 +125,20 @@ public:
         return *this;
     }
     
+    Vector set_component_to_1(int index, bool modify=false){
+        if (std::abs(at(index)) < EPSILON){
+            std::cerr << "Element is 0 - cannot scale to 1\n";
+            throw 0;
+        }
+        Vector res(size());
+        for (int i = 0; i < size(); i++)
+            res[i] = at(i)/at(index);
+        if (modify)
+            *this = res;
+        return move(res);
+    }
+
+
 };
 
 Vector operator*(double factor, const Vector &v){
