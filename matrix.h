@@ -67,6 +67,16 @@ public:
         }
         return move(product);
     }
+    Matrix transpose(bool modify = false)
+    {
+        Matrix m(order().second, order().first);
+        for(int i{0};i<order().first;i++)
+            for(int j{0};j<order().second;j++)
+                m.at(j,i) = at(i,j);
+        if(modify)
+            *this = m;
+        return move(m);
+    }
 };
 
 inline void print(const Matrix &m){
