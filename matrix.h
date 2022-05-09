@@ -77,6 +77,71 @@ public:
             *this = m;
         return move(m);
     }
+
+        Matrix cef(bool modify = false){ 
+        Matrix res(*this);
+        res.cef(0, 0);
+        if (modify) 
+            *this = res;
+        return move(res); 
+    }
+
+    Matrix &cef(int start_row, int start_col){
+        print(*this);
+        std::cout << std::endl;
+        if (start_row == at(0).size() || start_col == size()) return *this; // do nothing more
+        bool allzero = true;
+        for (int column = start_col; column < size(); column++)
+            if (std::abs(at(start_row, column)) > EPSILON){
+                allzero = false;
+                at(start_col).swap(at(column));
+                break;
+            }
+        if (allzero) return cef(start_row + 1, start_col);
+
+        at(start_col).set_component_to_1(start_row, true);
+        for (int column = start_col + 1; column < size(); column++)
+            at(column) -= (at(start_row, column) * at(start_col));
+        return cef(start_col + 1, start_row + 1);
+    }
+
+    Matrix rcef(bool modify = false){ 
+        Matrix res(*this);
+        res.rcef(0, 0);
+        if (modify) 
+            *this = res;
+        return move(res); 
+    }
+
+    Matrix &rcef(int start_row, int start_col){
+        print(*this);
+        std::cout << std::endl;
+        if (start_row == at(0).size() || start_col == size()) return *this; // do nothing more
+        bool allzero = true;
+        for (int column = start_col; column < size(); column++)
+            if (std::abs(at(start_row, column)) > EPSILON){
+                allzero = false;
+                at(start_col).swap(at(column));
+                break;
+            }
+        if (allzero) return rcef(start_row + 1, start_col);
+
+        at(start_col).set_component_to_1(start_row, true);
+        for (int column = 0; column < size(); column++){ // only change from cef -> rcef
+            if (column == start_col) 
+                continue;
+            at(column) -= (at(start_row, column) * at(start_col));
+        }
+        return rcef(start_col + 1, start_row + 1);
+    }
+
+    Matrix rref(bool modify=false){
+        Matrix res(this->transpose());
+        res.rcef(0, 0).transpose(true);
+        if (modify)
+            *this = res;
+        return move(res);
+    }
 };
 
 inline void print(const Matrix &m){
