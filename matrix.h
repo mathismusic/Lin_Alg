@@ -3,6 +3,8 @@
 #include "Vector.h"
 
 
-class Matrix{
-    std::vector<Vector> cols;
+class Matrix : public std::vector<Vector>{
+public:
+    Matrix(){}
+    
 };
