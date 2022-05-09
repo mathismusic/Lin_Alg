@@ -8,11 +8,30 @@ public:
     Matrix(){}
     Matrix(int m, int n): vector<Vector>(n,Vector(m))
     {}
-    Matrix(std::initializer_list<std::initializer_list<double> > init){
-        for (int i = 0; i < init.size(); i++)
-            push_back(Vector(*(init.begin() + i)));
+    Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=true){
+        if (init.size() == 0) 
+            return;
+
+        for (auto &column: init)
+            if (column.size() != init.begin()->size()){
+                std::cerr << "Invalid matrix - All sublists must have same size\n";
+                throw 0;
+            }
+
+        if (byColumns)
+            for (auto &column: init){
+                push_back(Vector(column));
+            }
+        else
+            for (int column_no = 0; column_no < init.begin()->size(); column_no++){
+                Vector current_column;
+                for (auto &row: init)
+                    current_column.push_back(*(row.begin() + column_no));
+                push_back(current_column);
+            }          
     }
-    std::pair<int,int> order()
+
+    std::pair<int,int> order() const
     {
         if(size()==0)
             return std::pair<int,int> (0,0);
