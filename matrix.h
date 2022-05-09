@@ -27,6 +27,27 @@ public:
         }
         return at(j).at(i);
     }
+    using std::vector<Vector>::at;
+    Matrix operator *(Matrix m)
+    {
+        if(order().second!=m.order().first)
+        {
+            std::cerr<<"Matrices incompatible for multiplication"<<std::endl;
+            throw 0;
+        }
+        Matrix product(order().first,m.order().second);
+        for(int i{0};i<order().first;i++)
+        {
+            for(int j{0};j<m.order().second;j++)
+            {
+                for(int k{0};k<order().second;k++)
+                {
+                    product.at(i,j)+=at(i,k)*m.at(k,j);
+                }
+            }
+        }
+        return move(product);
+    }
 };
 
 inline void print(const Matrix &m){
