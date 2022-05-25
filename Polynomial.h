@@ -17,7 +17,7 @@ public:
     {}
     Polynomial(double d)
     {
-
+        vec.pu
     }
     int degree () const
     {
