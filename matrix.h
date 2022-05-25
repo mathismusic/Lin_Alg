@@ -57,7 +57,9 @@ public:
         }
         return at(j).at(i);
     }
+
     using std::vector<Vector>::at;
+    
     Matrix operator *(Matrix m)
     {
         if(order().second!=m.order().first)
@@ -89,7 +91,7 @@ public:
         return move(m);
     }
 
-        Matrix cef(bool modify = false){ 
+    Matrix cef(bool modify = false){ 
         Matrix res(*this);
         res.cef(0, 0);
         if (modify) 
@@ -167,3 +169,5 @@ inline void print(const Matrix &m){
         std::cout << "]\n";
     }
 }
+
+class SquareMatrix
