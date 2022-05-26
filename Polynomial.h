@@ -15,10 +15,8 @@ public:
     {}
     Polynomial(char x = 'x'): variable{x}
     {}
-    Polynomial(double d)
-    {
-        vec.pu
-    }
+    Polynomial(double d): variable{x}, vec{d}
+    {}
     int degree () const
     {
         if(vec.size()==0)
