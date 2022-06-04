@@ -289,6 +289,6 @@ public:
 };
 
 inline double det(const SquareMatrix &s){
-    SquareMatrix s{*this};
-    return s.det();
+    SquareMatrix scpy{s};
+    return scpy.det();
 }
