@@ -99,6 +99,16 @@ public:
             *this = res;
         return move(res); 
     }
+    /* to test */
+    Matrix cef(bool modify=false) const{
+        if (modify){
+            std::cerr << "error in cef: cannot modify const matrix.\n";
+            throw 4;
+        }
+        Matrix res(*this);
+        res.cef(0, 0);
+        return move(res); 
+    }
 
     Matrix &cef(int start_row, int start_col){
         print(*this);
@@ -243,6 +253,14 @@ public:
             std::cerr << "Invalid argument to row operation: first argument must be P/E/M.\n";
             throw 3;
         }
+    }
+    /* to check */
+    inline int rank() const{
+        int r = 0;
+        Matrix cef_ = cef();
+        for (const auto &col: cef_)
+            if (!(col.isZero())) r++;
+        return r;
     }
 };
 
