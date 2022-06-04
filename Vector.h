@@ -41,6 +41,16 @@ public:
         return res;
     }
 
+    Vector normalize(bool modify=false, int k = 2){
+        Vector res(size());
+        double norm_ = norm(k);
+        for (int i = 0; i < size(); i++)
+            res[i] = at(i)/norm_;
+        if (modify) 
+            *this = res;
+        return move(res);
+    }
+
     Vector operator + (const Vector &v) const
     {
         if (size()!=v.size())

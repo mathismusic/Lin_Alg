@@ -155,6 +155,18 @@ public:
             *this = res;
         return move(res);
     }
+
+    Matrix GramSchmidt(bool modify=false){
+        Matrix res;
+        for (int i = 0; i < n; i++){
+            try{
+                res.push_back(normali)
+            }
+        }
+        if (modify)
+            *this = res;
+        return move(res);
+    }
 };
 
 inline void print(const Matrix &m){
