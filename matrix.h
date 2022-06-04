@@ -159,9 +159,17 @@ public:
     Matrix GramSchmidt(bool modify=false){
         Matrix res;
         for (int i = 0; i < n; i++){
-            try{
-                res.push_back(normali)
+            Vector vn{at(i)};
+            for(auto &k:res)
+            {
+                vn-=(vn.dot(k))*k;
             }
+            try{
+                vn.normalize(true);
+            }
+            catch(...)
+            {}
+            res.push_back(vn);
         }
         if (modify)
             *this = res;
@@ -182,24 +190,24 @@ inline void print(const Matrix &m){
     }
 }
 
-class SquareMatrix: public Matrix{
-public:
-    friend inline double det(const SquareMatrix &s);
-};
+// class SquareMatrix: public Matrix{
+// public:
+//     friend inline double det(const SquareMatrix &s);
+// };
 
-inline double det(const SquareMatrix &s){
-    if (start_row == at(0).size() || start_col == size()) return *this; // do nothing more
-    bool allzero = true;
-    for (int column = start_col; column < size(); column++)
-        if (std::abs(at(start_row, column)) > EPSILON){
-            allzero = false;
-            at(start_col).swap(at(column));
-            break;
-        }
-    if (allzero) return cef(start_row + 1, start_col);
+// inline double det(const SquareMatrix &s){
+//     if (start_row == at(0).size() || start_col == size()) return *this; // do nothing more
+//     bool allzero = true;
+//     for (int column = start_col; column < size(); column++)
+//         if (std::abs(at(start_row, column)) > EPSILON){
+//             allzero = false;
+//             at(start_col).swap(at(column));
+//             break;
+//         }
+//     if (allzero) return cef(start_row + 1, start_col);
 
-    at(start_col).set_component_to_1(start_row, true);
-    for (int column = start_col + 1; column < size(); column++)
-        at(column) -= (at(start_row, column) * at(start_col));
-    return cef(start_col + 1, start_row + 1);
-}
+//     at(start_col).set_component_to_1(start_row, true);
+//     for (int column = start_col + 1; column < size(); column++)
+//         at(column) -= (at(start_row, column) * at(start_col));
+//     return cef(start_col + 1, start_row + 1);
+// }
