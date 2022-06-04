@@ -12,7 +12,8 @@
 // inverse by rref(A|I)
 // adjugate from inverse if rank=n, if rank<n-1 then 0, rank = n-1 -> calculate each coeff, O(n^5)
 // 
-
+class Matrix;
+inline void print(const& Matrix);
 
 class Matrix : public std::vector<Vector>{
 public:
@@ -191,13 +192,12 @@ inline void print(const Matrix &m){
 }
 
 class SquareMatrix: public Matrix{
-public:
-    friend inline double det(const SquareMatrix &s);
-    double det(int start_row, int start_col){
+private:
+    double det(int start_row = 0, int start_col = 0){
         if (start_row == at(0).size() || start_col == size())
         {
             double x{1};
-            for(int i{0};i<order.first;i++)
+            for(int i{0};i<order().first;i++)
             {
                 x*=at(i,i);
             }
@@ -216,22 +216,11 @@ public:
             at(column) -= (at(start_row, column) * at(start_col))/x;
         return det(start_col + 1, start_row + 1);
     }
+public:
+    friend inline double det(const SquareMatrix &s);
 };
 
-// inline double det(const SquareMatrix &s){
-//     SquareMatrix s{*this};
-//     if (start_row == at(0).size() || start_col == size()) return *this; // do nothing more
-//     bool allzero = true;
-//     for (int column = start_col; column < size(); column++)
-//         if (std::abs(at(start_row, column)) > EPSILON){
-//             allzero = false;
-//             at(start_col).swap(at(column));
-//             break;
-//         }
-//     if (allzero) return cef(start_row + 1, start_col);
-
-//     at(start_col).set_component_to_1(start_row, true);
-//     for (int column = start_col + 1; column < size(); column++)
-//         at(column) -= (at(start_row, column) * at(start_col));
-//     return cef(start_col + 1, start_row + 1);
-// }
+inline double det(const SquareMatrix &s){
+    SquareMatrix s{*this};
+    return s.det();
+}
