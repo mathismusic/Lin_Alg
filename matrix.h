@@ -260,6 +260,18 @@ inline void print(const Matrix &m){
 }
 
 class SquareMatrix: public Matrix{
+public:
+    SquareMatrix(){}
+    SquareMatrix(int m): Matrix{m,m}
+    {}
+    SquareMatrix(std::initializer_list<std::initializer_list> i): Matrix{i}
+    {
+        if(order().first!=order().second)
+        {
+            std::cerr<<"invalid initializer_list for square matrix"<<std::endl;
+            throw 1;
+        }
+    }
 private:
     double det(int start_row = 0, int start_col = 0){
         if (start_row == at(0).size() || start_col == size())
