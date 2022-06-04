@@ -264,7 +264,7 @@ public:
     SquareMatrix(){}
     SquareMatrix(int m): Matrix{m,m}
     {}
-    SquareMatrix(std::initializer_list<std::initializer_list> i): Matrix{i}
+    SquareMatrix(std::initializer_list<std::initializer_list<double> > i): Matrix{i}
     {
         if(order().first!=order().second)
         {
