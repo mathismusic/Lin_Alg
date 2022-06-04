@@ -20,7 +20,7 @@ public:
     Matrix(){}
     Matrix(int m, int n): vector<Vector>(n,Vector(m))
     {}
-    Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=true){
+    Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=false){
         if (init.size() == 0) 
             return;
 
