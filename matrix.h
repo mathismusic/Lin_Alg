@@ -61,7 +61,7 @@ public:
 
     using std::vector<Vector>::at;
     
-    Matrix operator *(Matrix m)
+    Matrix operator *(const Matrix &m)
     {
         if(order().second!=m.order().first)
         {
