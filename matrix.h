@@ -176,6 +176,74 @@ public:
             *this = res;
         return move(res);
     }
+
+
+    inline void Mj(int j, double c, bool columnOperation=false){
+        if (std::abs(c) < EPSILON){
+            std::cerr << "error in Mj: M_j(0) is not allowed.\n";
+            throw 2;
+        }
+        if (columnOperation)
+            at(j) *= c;
+        // must modify that row's elem in every column - visualize, the columns are strewn somewhere on the heap and are reined in by a vector of pointers(the data of a Vector), also on the heap.
+        else for (int i = 0; i < size(); i++) 
+            at(j, i) *= c;
+    }
+
+    inline void Pjk(int j, int k, bool columnOperation=false){
+        if (columnOperation)
+            at(j).swap(at(k));
+        else 
+        for (int i = 0; i < size(); i++){
+            // for each i(column), do the following.
+            auto tmp = at(j, i);
+            at(j, i) = at(k, i);
+            at(k, i) = tmp;
+        }
+    }
+
+    inline void Ejk(int j, int k, double lambda, bool columnOperation=false){
+        if (std::abs(lambda) < EPSILON)
+            return; // do nothing in this case.
+        if (columnOperation) 
+            at(j) += lambda * at(k);
+        else
+        for (int i = 0; i < size(); i++)
+            at(j, i) += lambda * at(k, i);
+    }
+
+    inline void elementaryColumnOperation(const std::string &type, int j, int k, double lambda=0){
+        if (j < 0 || j >= size() || k < 0 || k >= size()){
+            std::cerr << "error in column operation: invalid input indices.\n";
+            throw 3;
+        }
+        if (type == "M")
+            Mj(j, k, true);
+        else if (type == "P")
+            Pjk(j, k, true);
+        else if (type == "E")
+            Ejk(j, k, lambda, true);
+        else{
+            std::cerr << "Invalid argument to column operation: first argument must be P/E/M.\n";
+            throw 3;
+        }
+    }
+    inline void elementaryRowOperation(const std::string &type, int j, int k, double lambda=0){
+        if (j < 0 || j >= order().first || k < 0 || k >= order().first){
+            std::cerr << "error in row operation: invalid input indices.\n";
+            throw 3;
+        }
+        if (type == "M")
+            Mj(j, k);
+        else if (type == "P")
+            Pjk(j, k);
+        else if (type == "E")
+            Ejk(j, k, lambda);
+        else{
+            std::cerr << "Invalid argument to row operation: first argument must be P/E/M.\n";
+            throw 3;
+        }
+    }
 };
 
 inline void print(const Matrix &m){
