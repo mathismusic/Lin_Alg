@@ -33,7 +33,7 @@ public:
     }
     inline bool isZero() const{ return (std::abs(norm()) < EPSILON); }
 
-    Vector unit(int k=2) const{
+    Vector normalize(int k=2) const{
         Vector res(size());
         double norm_ = norm(k);
         for (int i = 0; i < size(); i++)
