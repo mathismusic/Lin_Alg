@@ -36,6 +36,8 @@ public:
     Vector normalize(int k=2) const{
         Vector res(size());
         double norm_ = norm(k);
+        if (std::abs(norm_) < EPSILON)
+            throw "Cannot normalize zero vector";
         for (int i = 0; i < size(); i++)
             res[i] = at(i)/norm_;
         return res;
@@ -44,6 +46,8 @@ public:
     Vector normalize(bool modify=false, int k = 2){
         Vector res(size());
         double norm_ = norm(k);
+        if (std::abs(norm_) < EPSILON)
+            throw "Cannot normalize zero vector";
         for (int i = 0; i < size(); i++)
             res[i] = at(i)/norm_;
         if (modify) 
@@ -171,6 +175,8 @@ inline int dim(const Vector &v){ return v.size(); }
 
 inline const Vector &normalize(Vector &v){
     double norm_ = v.norm();
+    if (std::abs(norm_) < EPSILON)
+        throw "Cannot normalize zero vector";
     for (auto &component: v)
         component = component / norm_;
     return v;
