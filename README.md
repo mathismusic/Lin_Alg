@@ -1,7 +1,2 @@
 # Lin_Alg
-Library for Linear Algebra
-Hello
-Hello
-
-Hello World
-Hello World
+Library for Linear Algebra. Work in progress!
