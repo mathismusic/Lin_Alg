@@ -47,28 +47,7 @@ public:
      * @param init Initializer list used to create the matrix.
      * @param byColumns True if the initializer list contains columns of the matrix, and false otherwise.
      */
-    Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=false){
-        if (init.size() == 0) 
-            return;
-
-        for (auto &column: init)
-            if (column.size() != init.begin()->size()){
-                std::cerr << "Invalid matrix - All sublists must have same size\n";
-                throw std::invalid_argument("Invalid matrix - All sublists must have same size\n");
-            }
-
-        if (byColumns)
-            for (auto &column: init){
-                mat.push_back(Vector(column));
-            }
-        else
-            for (int column_no = 0; column_no < init.begin()->size(); column_no++){
-                Vector current_column;
-                for (auto &row: init)
-                    current_column.push_back(*(row.begin() + column_no));
-                mat.push_back(current_column);
-            }          
-    }
+    Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=false);
     /**
      * @brief Gives the dimensions of the matrix as the std::pair {num_rows, num_columns}.
      * 
@@ -129,26 +108,7 @@ public:
      * 
      * @return Matrix Product of the two matrices 
      */
-    Matrix operator *(const Matrix &m)
-    {
-        if(order().second!=m.order().first)
-        {
-            std::cerr<<"Matrices incompatible for multiplication"<<std::endl;
-            throw std::invalid_argument("Matrices incompatible for multiplication");
-        }
-        Matrix product(order().first,m.order().second);
-        for(int i{0};i<order().first;i++)
-        {
-            for(int j{0};j<m.order().second;j++)
-            {
-                for(int k{0};k<order().second;k++)
-                {
-                    product.at(i,j)+=at(i,k)*m.at(k,j);
-                }
-            }
-        }
-        return std::move(product);
-    }
+    Matrix operator *(const Matrix &m);
     /**
      * @brief Returns a new matrix which is the transpose of the original matrix
      * 
@@ -194,24 +154,7 @@ public:
         return std::move(res); 
     }
 protected: //change to private if not needed
-    Matrix &cef(int start_row, int start_col){
-        print(*this);
-        std::cout << std::endl;
-        if (start_row == at(0).size() || start_col == mat.size()) return *this; // do nothing more
-        bool allzero = true;
-        for (int column = start_col; column < mat.size(); column++)
-            if (std::abs(at(start_row, column)) > EPSILON){
-                allzero = false;
-                at(start_col).swap(at(column));
-                break;
-            }
-        if (allzero) return cef(start_row + 1, start_col);
-
-        at(start_col).set_component_to_1(start_row, true);
-        for (int column = start_col + 1; column < mat.size(); column++)
-            at(column) -= (at(start_row, column) * at(start_col));
-        return cef(start_col + 1, start_row + 1);
-    }
+    Matrix &cef(int start_row, int start_col);
 public:
     /**
      * @brief Returns the reduced column echelon form of the given matrix
@@ -227,27 +170,7 @@ public:
         return std::move(res); 
     }
 protected: //change to private if not needed
-    Matrix &rcef(int start_row, int start_col){
-        print(*this);
-        std::cout << std::endl;
-        if (start_row == at(0).size() || start_col == mat.size()) return *this; // do nothing more
-        bool allzero = true;
-        for (int column = start_col; column < mat.size(); column++)
-            if (std::abs(at(start_row, column)) > EPSILON){
-                allzero = false;
-                at(start_col).swap(at(column));
-                break;
-            }
-        if (allzero) return rcef(start_row + 1, start_col);
-
-        at(start_col).set_component_to_1(start_row, true);
-        for (int column = 0; column < mat.size(); column++){ // only change from cef -> rcef
-            if (column == start_col) 
-                continue;
-            at(column) -= (at(start_row, column) * at(start_col));
-        }
-        return rcef(start_col + 1, start_row + 1);
-    }
+    Matrix &rcef(int start_row, int start_col);
 protected:
 //returns the number if columns in the matrix
     int size(){
@@ -273,25 +196,7 @@ public:
      * @param modify if true, then the given matrix is modified.
      * @return Matrix 
      */
-    Matrix GramSchmidt(bool modify=false){
-        Matrix res;
-        for (int i = 0; i < order().second; i++){ //recheck
-            Vector vn{at(i)};
-            for(auto &k:res.mat)
-            {
-                vn-=(vn.dot(k))*k;
-            }
-            try{
-                vn.normalize(true);
-            }
-            catch(...)
-            {}
-            res.mat.push_back(vn);
-        }
-        if (modify)
-            *this = res;
-        return std::move(res);
-    }
+    Matrix GramSchmidt(bool modify=false);
 
     /**
      * @brief Multiplies a given row/column at the jth index of the matrix with a nonzero scalar c.
@@ -299,17 +204,7 @@ public:
      * @param c Scalar which is to be multiplied
      * @param columnOperation Multiplies the jth column by c if true, else multiplies the jth row by c.
      */
-    inline void Mj(int j, double c, bool columnOperation=false){
-        if (std::abs(c) < EPSILON){
-            std::cerr << "error in Mj: M_j(0) is not allowed.\n";
-            throw std::invalid_argument("error in Mj: M_j(0) is not allowed.\n");
-        }
-        if (columnOperation)
-            at(j) *= c;
-        // must modify that row's elem in every column - visualize, the columns are strewn somewhere on the heap and are reined in by a vector of pointers(the data of a Vector), also on the heap.
-        else for (int i = 0; i < mat.size(); i++) 
-            at(j, i) *= c;
-    }
+    inline void Mj(int j, double c, bool columnOperation=false);
     /**
      * @brief Swaps the row/column at index j with the row/column at index k
      * 
@@ -336,15 +231,7 @@ public:
      * @param lambda 
      * @param columnOperation 
      */
-    inline void Ejk(int j, int k, double lambda, bool columnOperation=false){
-        if (std::abs(lambda) < EPSILON)
-            return; // do nothing in this case.
-        if (columnOperation) 
-            at(j) += lambda * at(k);
-        else
-        for (int i = 0; i < mat.size(); i++)
-            at(j, i) += lambda * at(k, i);
-    }
+    inline void Ejk(int j, int k, double lambda, bool columnOperation=false)
 
     /**
      * @brief 
@@ -354,22 +241,7 @@ public:
      * @param k 
      * @param lambda 
      */
-    inline void elementaryColumnOperation(const std::string &type, int j, int k, double lambda=0){
-        if (j < 0 || j >= mat.size() || k < 0 || k >= mat.size()){
-            std::cerr << "error in column operation: invalid input indices.\n";
-            throw 3;
-        }
-        if (type == "M")
-            Mj(j, k, true);
-        else if (type == "P")
-            Pjk(j, k, true);
-        else if (type == "E")
-            Ejk(j, k, lambda, true);
-        else{
-            std::cerr << "Invalid argument to column operation: first argument must be P/E/M.\n";
-            throw 3;
-        }
-    }
+    inline void elementaryColumnOperation(const std::string &type, int j, int k, double lambda=0);
     /**
      * @brief 
      * 
@@ -378,22 +250,7 @@ public:
      * @param k 
      * @param lambda 
      */
-    inline void elementaryRowOperation(const std::string &type, int j, int k, double lambda=0){
-        if (j < 0 || j >= order().first || k < 0 || k >= order().first){
-            std::cerr << "error in row operation: invalid input indices.\n";
-            throw 3;
-        }
-        if (type == "M")
-            Mj(j, k);
-        else if (type == "P")
-            Pjk(j, k);
-        else if (type == "E")
-            Ejk(j, k, lambda);
-        else{
-            std::cerr << "Invalid argument to row operation: first argument must be P/E/M.\n";
-            throw 3;
-        }
-    }
+    inline void elementaryRowOperation(const std::string &type, int j, int k, double lambda=0);
     /* to check */
     inline int rank() const{
         int r = 0;
