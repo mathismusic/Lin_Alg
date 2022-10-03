@@ -1,8 +1,8 @@
 #include<iostream>
-#include "matrix.h"
+#include "Matrix.h"
 using namespace std;
 
-Matrix::Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=false){
+Matrix::Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns){
     if (init.size() == 0) 
         return;
 
@@ -53,7 +53,7 @@ Matrix &Matrix::cef(int start_row, int start_col){
     for (int column = start_col; column < mat.size(); column++)
         if (std::abs(at(start_row, column)) > EPSILON){
             allzero = false;
-            at(start_col).swap(at(column));
+            std::swap(at(start_col), at(column));
             break;
         }
     if (allzero) return cef(start_row + 1, start_col);
@@ -72,7 +72,7 @@ Matrix &Matrix::rcef(int start_row, int start_col){
     for (int column = start_col; column < mat.size(); column++)
         if (std::abs(at(start_row, column)) > EPSILON){
             allzero = false;
-            at(start_col).swap(at(column));
+            std::swap(at(start_col), at(column));
             break;
         }
     if (allzero) return rcef(start_row + 1, start_col);
@@ -95,7 +95,7 @@ Matrix Matrix::GramSchmidt(bool modify){
             vn-=(vn.dot(k))*k;
         }
         try{
-            vn.normalize(true);
+            vn.normalized(true);
         }
         catch(...)
         {}
@@ -106,7 +106,7 @@ Matrix Matrix::GramSchmidt(bool modify){
     return std::move(res);
 }
 
-inline void Matrix::Mj(int j, double c, bool columnOperation=false){
+inline void Matrix::Mj(int j, double c, bool columnOperation){
     if (std::abs(c) < EPSILON){
         std::cerr << "error in Mj: M_j(0) is not allowed.\n";
         throw std::invalid_argument("error in Mj: M_j(0) is not allowed.\n");
@@ -145,7 +145,7 @@ inline void Matrix::elementaryColumnOperation(const std::string &type, int j, in
     }
 }
 
-inline void Matrix::elementaryRowOperation(const std::string &type, int j, int k, double lambda=0){
+inline void Matrix::elementaryRowOperation(const std::string &type, int j, int k, double lambda){
     if (j < 0 || j >= order().first || k < 0 || k >= order().first){
         std::cerr << "error in row operation: invalid input indices.\n";
         throw 3;
