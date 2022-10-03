@@ -107,14 +107,14 @@ double Vector::dot(const Vector &v) const
     return pdt;
 }
 
-inline double Vector::norm(int k=2) const{
+inline double Vector::norm(int k) const{
     double res = 0;
     for (int i = 0; i < size(); i++)
         res += std::pow(at(i), k);
     return pow(res, 1.0/k);
 }
 
-Vector Vector::normalized(bool modify=false, int k = 2){
+Vector Vector::normalized(bool modify, int k){
     Vector res(size());
     double norm_ = norm(k);
     if (std::abs(norm_) < EPSILON)
@@ -128,7 +128,7 @@ Vector Vector::normalized(bool modify=false, int k = 2){
 
 
 // special function, required for reduced matrix forms
-Vector Vector::set_component_to_1(int index, bool modify=false){
+Vector Vector::set_component_to_1(int index, bool modify){
         if (std::abs(at(index)) < EPSILON){
             std::cerr << "Element is 0 - cannot scale to 1\n";
             throw std::invalid_argument("Element is 0 - cannot scale to 1\n");
