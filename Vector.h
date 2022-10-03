@@ -217,6 +217,10 @@ public:
      */
     Vector set_component_to_1(int index, bool modify=false);
 
+    // iterators. We use the std::vector<double>::iterator as the underlying iterator, all operations on the iterators are done on the container vector's iterator object.
+
+    std::vector<double>::iterator begin(){ return vec.begin(); }
+    std::vector<double>::iterator end(){ return vec.end(); }
 };
 
 /**
