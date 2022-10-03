@@ -144,7 +144,7 @@ Vector Vector::set_component_to_1(int index, bool modify){
 
 // ===================== Global functions ============================= //
 
-inline void operator<<(std::ostream &ost, const Vector &v){
+inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
     if (v.size() == 0){
         ost << "[]";
         return;
@@ -158,5 +158,6 @@ inline void operator<<(std::ostream &ost, const Vector &v){
             ost << ", ";
     }
     std::cout<<"]";
+    return ost;
 }
 

@@ -240,7 +240,7 @@ Vector operator*(const double &factor, const Vector &v){
  * @param ost The std::ostream stream to print to
  * @param v The Vector to print.
  */
-inline void operator<<(std::ostream &ost, const Vector &v);
+inline std::ostream& operator<<(std::ostream &ost, const Vector &v);
 
 /**
  * @brief returns the dimension/length/size of the vector.
