@@ -139,8 +139,8 @@ Vector Vector::set_component_to_1(int index, bool modify=false){
             res[i] = at(i)/at(index);
         if (modify)
             *this = res;
-        return move(res);
-    }
+        return std::move(res);
+}
 
 // ===================== Global functions ============================= //
 
