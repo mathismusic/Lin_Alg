@@ -194,7 +194,7 @@ public:
      * @param k. The norm required. Defaults to 2.
      * @return double. The computed norm.
      */
-    inline double norm(int k=2) const;
+    double norm(int k=2) const;
 
     /**
      * @brief Normalizes the Vector according to its k-norm. throws invalid_argument exception when the k-norm is 0.

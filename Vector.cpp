@@ -107,7 +107,7 @@ double Vector::dot(const Vector &v) const
     return pdt;
 }
 
-inline double Vector::norm(int k) const{
+double Vector::norm(int k) const{
     double res = 0;
     for (int i = 0; i < size(); i++)
         res += std::pow(at(i), k);
