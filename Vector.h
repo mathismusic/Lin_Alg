@@ -119,21 +119,7 @@ public:
      * @param v The Vector to add
      * @return Vector. The result of addition.
      */
-    Vector operator + (const Vector &v) const
-    {
-        if (size()!=v.size())
-        {
-            std::cerr<<"Invalid addition"<<std::endl;
-            throw std::invalid_argument("Vectors incompatible for addition.");
-        }
-
-        Vector sum(size());
-        for(int i{0};i<size();i++)
-        {
-            sum.at(i) = at(i)+v.at(i);
-        }
-        return sum;
-    }
+    Vector operator + (const Vector &v) const;
 
     /**
      * @brief computes the difference of self and Vector v.
@@ -141,20 +127,7 @@ public:
      * @param v The Vector to subtract
      * @return Vector. The result of subtraction.
      */
-    Vector operator - (const Vector &v) const
-    {
-        if (size()!=v.size())
-        {
-            std::cerr<<"Invalid subtraction"<<std::endl;
-            throw std::invalid_argument("Vectors incompatible for subtraction.");
-        }
-        Vector diff(size());
-        for(int i{0};i<size();i++)
-        {
-            diff.at(i) = at(i)-v.at(i);
-        }
-        return diff;
-    }
+    Vector operator - (const Vector &v) const;
 
     /**
      * @brief computes the product of self and double d.
@@ -162,13 +135,7 @@ public:
      * @param v The multiplying factor
      * @return Vector. The result of multiplication.
      */
-    Vector operator * (const double &d) const
-    {
-        Vector v(size());
-        for (int i{0};i<size();i++)
-            v.at(i) = d * at(i);
-        return v;
-    }
+    Vector operator * (const double &d) const;
 
     /**
      * @brief returns the vector obtained by dividing self by double d. Throws an exception if d is zero.
@@ -176,15 +143,7 @@ public:
      * @param v The (nonzero)factor to divide by
      * @return Vector. The result of division.
      */
-    Vector operator / (double d) const
-    {
-        if (std::abs(d) < EPSILON)
-        {
-            std::cerr<<"Division by 0"<<std::endl;
-            throw std::invalid_argument("Cannot divide by 0");
-        }
-        return (*this)*(1/d);
-    }
+    Vector operator / (double d) const;
 
     /**
      * @brief adds Vector v to self. Returns a const reference to self for chaining like so: v2 += (v1 += v);
@@ -192,16 +151,7 @@ public:
      * @param v The vector that is to be added to self
      * @return const Vector&.
      */
-    const Vector &operator+=(const Vector &v){
-        if (size()!=v.size())
-        {
-            std::cerr<<"Invalid addition"<<std::endl;
-            throw 0;
-        }
-        for (int i = 0; i < size(); i++)
-            at(i) = at(i) + v.at(i);
-        return *this;
-    }
+    const Vector &operator+=(const Vector &v);
     
     /**
      * @brief subtracts Vector v from self. Returns a const reference to self for chaining like so: v2 += (v1 -= v);
@@ -209,16 +159,7 @@ public:
      * @param v The vector that is to be subtracted from self
      * @return const Vector&.
      */
-    const Vector &operator-=(const Vector &v){
-        if (size()!=v.size())
-        {
-            std::cerr<<"Invalid subtraction"<<std::endl;
-            throw 0;
-        }
-        for (int i = 0; i < size(); i++)
-            at(i) = at(i) - v.at(i);
-        return *this;
-    }
+    const Vector &operator-=(const Vector &v);
     
     /**
      * @brief multiplies self by factor. Returns a const reference to self for chaining like so: v2 = (v1 *= 3);
@@ -226,11 +167,7 @@ public:
      * @param v The double that is to be multiplied to self
      * @return const Vector&.
      */
-    const Vector &operator*=(const double &factor){
-        for (auto &elem: vec)
-            elem = elem * factor;
-        return *this;
-    }
+    const Vector &operator*=(const double &factor);
     
     /**
      * @brief divides self by factor. Returns a const reference to self for chaining like so: v2 = (v1 /= 3);
@@ -238,16 +175,7 @@ public:
      * @param v The double by which self is to be divided
      * @return const Vector&.
      */
-    const Vector &operator/=(double factor){
-        if (std::abs(factor)<EPSILON)
-        {
-            std::cerr<<"Division by 0"<<std::endl;
-            throw 0;
-        }
-        for (int i = 0; i < size(); i++)
-            at(i) = at(i) / factor;
-        return *this;
-    }
+    const Vector &operator/=(double factor);
     
 
     // inner products and norms
@@ -258,18 +186,7 @@ public:
      * @param v The vector to compute the dot product with.
      * @return double. The computed dot product
      */
-    double dot(const Vector &v) const
-    {
-        if (this->size()!=v.size())
-        {
-            std::cerr<<"Invalid dot product"<<std::endl;
-            throw std::invalid_argument("Vectors do not have the same dimension. Cannot take dot product.");
-        }
-        double pdt{0};
-        for(int i{0};i<v.size();i++)
-            pdt += at(i) * v.at(i);
-        return pdt;
-    }
+    double dot(const Vector &v) const;
 
     /**
      * @brief Computes the k-norm of the Vector.
@@ -277,12 +194,7 @@ public:
      * @param k. The norm required. Defaults to 2.
      * @return double. The computed norm.
      */
-    inline double norm(int k=2) const{
-        double res = 0;
-        for (int i = 0; i < size(); i++)
-            res += std::pow(at(i), k);
-        return pow(res, 1.0/k);
-    }
+    inline double norm(int k=2) const;
 
     /**
      * @brief Normalizes the Vector according to its k-norm. throws invalid_argument exception when the k-norm is 0.
@@ -291,17 +203,7 @@ public:
      * @param k The type of norm required.
      * @return Vector. Either self(if modify is true) or a new Vector. In each case the returned Vector is normalized.
      */
-    Vector normalized(bool modify=false, int k = 2){
-        Vector res(size());
-        double norm_ = norm(k);
-        if (std::abs(norm_) < EPSILON)
-            throw "Cannot normalize zero vector";
-        for (int i = 0; i < size(); i++)
-            res[i] = at(i)/norm_;
-        if (modify)
-            *this = res;
-        return res;
-    }
+    Vector normalized(bool modify=false, int k = 2);
 
 
     // special function, required for reduced matrix forms
@@ -313,19 +215,7 @@ public:
      * @param modify modifies the vector itself to be the scaled version if true. Returns a copy of the scaled object otherwise. 
      * @return Vector 
      */
-    Vector set_component_to_1(int index, bool modify=false){
-        if (std::abs(at(index)) < EPSILON){
-            std::cerr << "Element is 0 - cannot scale to 1\n";
-            throw std::invalid_argument("Element is 0 - cannot scale to 1\n");
-        }
-
-        Vector res(size());
-        for (int i = 0; i < size(); i++)
-            res[i] = at(i)/at(index);
-        if (modify)
-            *this = res;
-        return move(res);
-    }
+    Vector set_component_to_1(int index, bool modify=false);
 
 };
 
@@ -346,21 +236,7 @@ Vector operator*(const double &factor, const Vector &v){
  * @param ost The std::ostream stream to print to
  * @param v The Vector to print.
  */
-inline void operator<<(std::ostream &ost, const Vector &v){
-    if (v.size() == 0){
-        ost << "[]";
-        return;
-    }
-
-    ost << '[';
-    for(auto it = v.begin(); it != v.end(); it++)
-    {
-        ost << *it;
-        if(it + 1 != v.end())
-            ost << ", ";
-    }
-    std::cout<<"]";
-}
+inline void operator<<(std::ostream &ost, const Vector &v);
 
 /**
  * @brief returns the dimension/length/size of the vector.

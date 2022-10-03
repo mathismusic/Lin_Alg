@@ -159,8 +159,8 @@ public:
     /**
      * @brief Returns the reduced column echelon form of the given matrix
      * 
-     * @param modify if modify is true, then the given matrix is changed to its column echelon form
-     * @return Matrix one possible column echelon form of the given matrix
+     * @param modify if modify is true, then the given matrix is changed to its reduced column echelon form
+     * @return Matrix one possible reduced column echelon form of the given matrix
      */
     Matrix rcef(bool modify = false){ 
         Matrix res(*this);
@@ -180,8 +180,8 @@ public:
     /**
      * @brief Returns the reduced row echelon form of the given matrix
      * 
-     * @param modify if modify is true, then the given matrix is changed to its column echelon form
-     * @return Matrix one possible column echelon form of the given matrix
+     * @param modify if modify is true, then the given matrix is changed to its reduced row echelon form
+     * @return Matrix one possible reduced row echelon form of the given matrix
      */
     Matrix rref(bool modify=false){
         Matrix res(this->transpose());
@@ -231,7 +231,7 @@ public:
      * @param lambda 
      * @param columnOperation 
      */
-    inline void Ejk(int j, int k, double lambda, bool columnOperation=false)
+    inline void Ejk(int j, int k, double lambda, bool columnOperation=false);
 
     /**
      * @brief 
