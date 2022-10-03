@@ -15,7 +15,7 @@
 // 
 
 class Matrix;
-inline void print(const Matrix&);
+inline std::ostream& operator << (std::ostream& c, const Matrix&);
 /**
  * @brief Class implementing a 2D matrix.
  * 
@@ -214,7 +214,7 @@ public:
      */
     inline void Pjk(int j, int k, bool columnOperation=false){
         if (columnOperation)
-            at(j).swap(at(k));
+            std::swap(at(j), at(k));
         else 
         for (int i = 0; i < mat.size(); i++){
             // for each i(column), do the following.
@@ -261,17 +261,21 @@ public:
     }
 };
 
-inline void print(const Matrix &m){
-    if (m.order().first == 0) return;
-    for (int i = 0; i < m.at(0).size(); i++){
-        std::cout << '[';
-        for(int j = 0; j < m.order().first; j++){
-            std::cout << m.at(j).at(i);
-            if (j != m.order().first - 1) 
-                std::cout << ", ";
+inline std::ostream& operator << (std::ostream& c, const Matrix& m){
+    if (m.order().first == 0) c<<"[]";
+    else{
+        for (int i = 0; i < m.at(0).size(); i++){
+            c << '[';
+            for(int j = 0; j < m.order().first; j++){
+                c << m.at(j).at(i);
+                if (j != m.order().first - 1) 
+                    c << ", ";
+            }
+            c << "]\n";
         }
-        std::cout << "]\n";
     }
+    c<<'\b';
+    return c;
 }
 
 class SquareMatrix: public Matrix{
@@ -302,7 +306,7 @@ private:
         for (int column = start_col; column < size(); column++)
             if (std::abs(at(start_row, column)) > EPSILON){
                 allzero = false;
-                at(start_col).swap(at(column));
+                std::swap(at(start_col), at(column));
                 break;
             }
         if (allzero) return 0;
