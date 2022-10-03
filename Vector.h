@@ -207,7 +207,7 @@ public:
 
 
     // special function, required for reduced matrix forms
-    
+protected:  
     /**
      * @brief scales the vector such that the element at the index is now 1. Throws an exception if the element at the index is 0.
      * 
@@ -217,10 +217,18 @@ public:
      */
     Vector set_component_to_1(int index, bool modify=false);
 
+    friend class Matrix;
+
+    void push_back(const double& d){
+        vec.push_back(d);
+    }
+
+public:
     // iterators. We use the std::vector<double>::iterator as the underlying iterator, all operations on the iterators are done on the container vector's iterator object.
 
     std::vector<double>::const_iterator begin() const{ return vec.begin(); }
     std::vector<double>::const_iterator end() const{ return vec.end(); }
+
 };
 
 /**

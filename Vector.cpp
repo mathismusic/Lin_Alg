@@ -147,7 +147,7 @@ Vector Vector::set_component_to_1(int index, bool modify){
 inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
     if (v.size() == 0){
         ost << "[]";
-        return;
+        return ost;
     }
 
     ost << '[';
