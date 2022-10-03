@@ -1,1 +1,4 @@
-*.o *.out test.* *.exe
+*.o 
+*.out 
+test*.* 
+*.exe
