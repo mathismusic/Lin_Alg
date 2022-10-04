@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "Vector.h"
 
 #define EPSILON 1e-10
 
@@ -144,6 +145,10 @@ Vector Vector::set_component_to_1(int index, bool modify){
 
 // ===================== Global functions ============================= //
 
+Vector operator*(const double &factor, const Vector &v){
+    return v * factor;
+}
+
 inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
     if (v.size() == 0){
         ost << "[]";
@@ -160,4 +165,6 @@ inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
     std::cout<<"]";
     return ost;
 }
+
+
 

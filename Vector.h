@@ -240,9 +240,7 @@ public:
  * @param v The Vector to be multiplied
  * @return Vector. The result of the multiplication
  */
-Vector operator*(const double &factor, const Vector &v){
-    return v * factor;
-}
+Vector operator*(const double &factor, const Vector &v);
 
 /**
  * @brief Utility function to print the Vector in a Python-style list format.
