@@ -15,7 +15,7 @@ public:
     {}
     Polynomial(char x = 'x'): variable{x}
     {}
-    Polynomial(double d): variable{x}, vec{d}
+    Polynomial(double d): variable{'x'}, vec{d}
     {}
     int degree () const
     {

@@ -1,3 +1,5 @@
+#include "Matrix.h"
+
 class SquareMatrix: public Matrix{
 public:
     SquareMatrix(){}
