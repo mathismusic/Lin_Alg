@@ -40,7 +40,7 @@ public:
      * @param m Number of rows in the matrix
      * @param n Number of columns in the matrix
      */
-    Matrix(int m, int n): mat{n,Vector(m)}{}
+    Matrix(int m, int n): mat(n,Vector(m)){}
     /**
      * @brief Construct a new Matrix object from the given initializer list
      * 
@@ -120,6 +120,7 @@ public:
      */
     Matrix transpose(bool modify = false){
         Matrix m(order().second, order().first);
+        std::cout << m.order().first << " " << m.order().second << std::endl;
         for(int i{0};i<order().first;i++)
             for(int j{0};j<order().second;j++)
                 m.at(j,i) = at(i,j);
