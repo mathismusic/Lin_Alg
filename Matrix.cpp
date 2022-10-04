@@ -2,6 +2,8 @@
 #include "Matrix.h"
 using namespace std;
 
+//implement arithmatic operations
+
 Matrix::Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns){
     if (init.size() == 0) 
         return;

@@ -278,7 +278,7 @@ inline std::ostream& operator << (std::ostream& c, const Matrix& m){
                     c<<0;
                 else
                     c << m.at(i,j);
-                if (j != m.order().first - 1) 
+                if (j != m.order().second - 1) 
                     c << ", ";
             }
             c << "]\n";
