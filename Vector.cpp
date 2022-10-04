@@ -158,7 +158,10 @@ inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
     ost << '[';
     for(auto it = v.begin(); it != v.end(); it++)
     {
-        ost << *it;
+        if(std::abs(*it)<EPSILON)
+            ost<<0;
+        else
+            ost << *it;
         if(it + 1 != v.end())
             ost << ", ";
     }

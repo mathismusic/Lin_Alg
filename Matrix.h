@@ -120,7 +120,7 @@ public:
      */
     Matrix transpose(bool modify = false){
         Matrix m(order().second, order().first);
-        std::cout << m.order().first << " " << m.order().second << std::endl;
+        // std::cout << m.order().first << " " << m.order().second << std::endl;
         for(int i{0};i<order().first;i++)
             for(int j{0};j<order().second;j++)
                 m.at(j,i) = at(i,j);
@@ -271,10 +271,13 @@ public:
 inline std::ostream& operator << (std::ostream& c, const Matrix& m){
     if (m.order().first == 0) c<<"[]";
     else{
-        for (int i = 0; i < m.at(0).size(); i++){
+        for (int i = 0; i < m.order().first; i++){
             c << '[';
-            for(int j = 0; j < m.order().first; j++){
-                c << m.at(j).at(i);
+            for(int j = 0; j < m.order().second; j++){
+                if(std::abs(m.at(i, j))<EPSILON)
+                    c<<0;
+                else
+                    c << m.at(i,j);
                 if (j != m.order().first - 1) 
                     c << ", ";
             }
