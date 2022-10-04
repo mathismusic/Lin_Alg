@@ -262,6 +262,9 @@ public:
             if (!(col.isZero())) r++;
         return r;
     }
+
+    //finding the QR decomposition of any matrix
+    std::pair<Matrix, Matrix> QR();
 };
 
 inline std::ostream& operator << (std::ostream& c, const Matrix& m){

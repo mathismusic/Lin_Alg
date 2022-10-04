@@ -161,3 +161,14 @@ inline void Matrix::elementaryRowOperation(const std::string &type, int j, int k
         throw 3;
     }
 }
+
+std::pair<Matrix, Matrix> Matrix::QR(){
+    Matrix Q = GramSchmidt();
+    Matrix R{order().second, order().second};
+    for(int i{0}; i<order().second; i++){
+        for(int j{i}; j<order().second; j++){
+            R.at(i,j) = at(j).dot(Q.at(i));
+        }
+    }
+    return {Q, R};
+}

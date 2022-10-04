@@ -9,6 +9,8 @@
 #define EPSILON 1e-10
 
 // check the move constructors. Whether or not to add
+//add a dot(vector, vector) function
+
 
 #define print(x) std::cout << (x);
 #define println(x) std::cout << (x) << std::endl;
