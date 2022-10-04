@@ -13,6 +13,14 @@ public:
             throw 1;
         }
     }
+    SquareMatrix(const Matrix &m): Matrix{m}
+    {
+        if(order().first!=order().second)
+        {
+            std::cerr<<"Matrix is not square, cannot convert to SquareMatrix"<<std::endl;
+            throw 1;
+        }
+    }
 private:
     double det(int start_row = 0, int start_col = 0){
         if (start_row == at(0).size() || start_col == size())
