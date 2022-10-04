@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include <iostream>
 #include <vector>
 #include <exception>
@@ -277,3 +280,5 @@ inline std::ostream& operator << (std::ostream& c, const Matrix& m){
     c<<'\b';
     return c;
 }
+
+#endif
