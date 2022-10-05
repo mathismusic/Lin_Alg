@@ -67,6 +67,11 @@ public:
         Matrix scpy{*this};
         scpy.augment(SquareMatrix(order(), true)); // augment identity to M.
         scpy.rref(true);
+
+        for (int i = 0; i < order(); i++)
+            if (scpy.at(i).isZero()) throw "non-invertible matrix";
+        
+        // else rref is I and hence the right side of scpy is M^{-1}.
         SquareMatrix ans(order());
         for (int i = 0; i < order(); i++)
             ans.at(i) = scpy.at(order() + i);
