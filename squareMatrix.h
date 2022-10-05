@@ -3,11 +3,16 @@
 class SquareMatrix: public Matrix{
 public:
     SquareMatrix(){}
-    SquareMatrix(int m): Matrix{m,m}
-    {}
+    // makes the mxm zero-matrix (default) or identity matrix.
+    SquareMatrix(int m, bool Identity=false): Matrix{m,m}
+    {
+        if (Identity)
+            for (int i = 0; i < m; i++) 
+                at(i, i) = 1;
+    }
     SquareMatrix(std::initializer_list<std::initializer_list<double> > i): Matrix{i}
     {
-        if(order().first!=order().second)
+        if(Matrix::order().first != Matrix::order().second)
         {
             std::cerr<<"invalid initializer_list for square matrix"<<std::endl;
             throw 1;
@@ -15,18 +20,21 @@ public:
     }
     SquareMatrix(const Matrix &m): Matrix{m}
     {
-        if(order().first!=order().second)
+        if(Matrix::order().first != Matrix::order().second)
         {
             std::cerr<<"Matrix is not square, cannot convert to SquareMatrix"<<std::endl;
             throw 1;
         }
     }
+
+
 private:
-    double det(int start_row = 0, int start_col = 0){
+    // modifies *this. So always use the .det() method with no arguments. Anyways private.
+    double det(int start_row, int start_col){
         if (start_row == at(0).size() || start_col == size())
         {
             double x{1};
-            for(int i{0};i<order().first;i++)
+            for(int i{0};i< Matrix::order().first;i++)
             {
                 x*=at(i,i);
             }
@@ -46,10 +54,26 @@ private:
         return det(start_col + 1, start_row + 1);
     }
 public:
-    friend inline double det(const SquareMatrix &s);
+    int order() const{
+        // return Matrix::order().first;
+        return mat.size();
+    }
+    double det() const{
+        SquareMatrix scpy{*this};
+        return scpy.det(0, 0);
+    }
+
+    SquareMatrix inverse() const{
+        Matrix scpy{*this};
+        scpy.augment(SquareMatrix(order(), true)); // augment identity to M.
+        scpy.rref(true);
+        SquareMatrix ans(order());
+        for (int i = 0; i < order(); i++)
+            ans.at(i) = scpy.at(order() + i);
+        return ans;
+    }
 };
 
 inline double det(const SquareMatrix &s){
-    SquareMatrix scpy{s};
-    return scpy.det();
+    return s.det();
 }

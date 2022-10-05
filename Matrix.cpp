@@ -48,8 +48,6 @@ Matrix Matrix::operator *(const Matrix &m){
 }
 
 Matrix &Matrix::cef(int start_row, int start_col){
-    print(*this);
-    std::cout << std::endl;
     if (start_row == at(0).size() || start_col == mat.size()) return *this; // do nothing more
     bool allzero = true;
     for (int column = start_col; column < mat.size(); column++)
@@ -67,8 +65,6 @@ Matrix &Matrix::cef(int start_row, int start_col){
 }
 
 Matrix &Matrix::rcef(int start_row, int start_col){
-    print(*this);
-    std::cout << std::endl;
     if (start_row == at(0).size() || start_col == mat.size()) return *this; // do nothing more
     bool allzero = true;
     for (int column = start_col; column < mat.size(); column++)

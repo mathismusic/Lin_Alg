@@ -27,6 +27,7 @@ inline std::ostream& operator << (std::ostream& c, const Matrix&);
  * 
  */
 class Matrix{
+protected:
     std::vector<Vector> mat;
 public:
     /**
@@ -176,8 +177,8 @@ public:
 protected: //change to private if not needed
     Matrix &rcef(int start_row, int start_col);
 protected:
-//returns the number if columns in the matrix
-    int size(){
+//returns the number of columns in the matrix. check if needed later
+    int size() const{
         return mat.size();
     }
 public:
@@ -194,6 +195,15 @@ public:
             *this = res;
         return std::move(res);
     }
+
+    void augment(const Matrix &other){
+        if (order().first != other.order().first){
+            throw 1; // fix later to cerr and throw invalid argument
+        }
+        for (auto &col: other)
+            mat.push_back(col);
+    }
+
     /**
      * @brief Runs the Gram-Schmidt algorithm on the columns of a copy of the given matrix.
      * 
@@ -266,6 +276,13 @@ public:
 
     //finding the QR decomposition of any matrix
     std::pair<Matrix, Matrix> QR();
+
+    inline std::vector<Vector>::const_iterator begin() const{
+        return mat.begin();
+    }
+    inline std::vector<Vector>::const_iterator end() const{
+        return mat.end();
+    }
 };
 
 inline std::ostream& operator << (std::ostream& c, const Matrix& m){
