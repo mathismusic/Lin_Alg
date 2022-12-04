@@ -43,15 +43,25 @@ public:
      */
     Matrix(int m, int n): mat(n,Vector(m)){}
     /**
-     * @brief Construct a new Matrix object from the given initializer list
-     * 
-     * @example Matrix({{1,2},{3,4},{5,6}}) 
-     * creates a 3*2 matrix when byColumns is false and a 2*3 matrix when byColumns is true.
+     * @brief Construct a new Matrix object from the given initializer list.   
+     * Example- Matrix({{1,2},{3,4},{5,6}}) creates a 3*2 matrix when byColumns is false and a 2*3 matrix when byColumns is true.
      * 
      * @param init Initializer list used to create the matrix.
      * @param byColumns True if the initializer list contains columns of the matrix, and false otherwise.
      */
     Matrix(std::initializer_list<std::initializer_list<double> > init, bool byColumns=false);
+    /**
+     * @brief Construct a new Matrix object with the Vector v as its column.
+     * 
+     * @param v The Vector to convert to a Matrix.
+     */
+    Matrix(const Vector &v): mat{v}{}
+    /**
+     * @brief Construct a new Matrix object from a vector of Vector objects as its columns.
+     * 
+     * @param v The vector of Vectors to be turned into a Matrix object.
+     */
+    Matrix(const std::vector<Vector> &v): mat{v}{}
     /**
      * @brief Gives the dimensions of the matrix as the std::pair {num_rows, num_columns}.
      * 
@@ -196,12 +206,23 @@ public:
         return std::move(res);
     }
 
-    void augment(const Matrix &other){
+    Matrix augment_modify(const Matrix &other){
         if (order().first != other.order().first){
             throw 1; // fix later to cerr and throw invalid argument
         }
         for (auto &col: other)
             mat.push_back(col);
+        return *this;
+    }
+
+    Matrix augment(const Matrix &other) const{
+        Matrix res{*this};
+        if (order().first != other.order().first){
+            throw 1; // fix later to cerr and throw invalid argument
+        }
+        for (auto &col: other)
+            res.mat.push_back(col);
+        return res;
     }
 
     /**

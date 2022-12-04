@@ -65,7 +65,7 @@ public:
 
     SquareMatrix inverse() const{
         Matrix scpy{*this};
-        scpy.augment(SquareMatrix(order(), true)); // augment identity to M.
+        scpy.augment_modify(SquareMatrix(order(), true)); // augment identity to M.
         scpy.rref(true);
 
         for (int i = 0; i < order(); i++)
