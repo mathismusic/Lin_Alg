@@ -12,7 +12,7 @@ class LS_Solver{
      * 
      * @return Vector The unique solution x to Ax = b
      */
-    static Vector retrieve(int sz, const std::vector<int> &pivotal_cols, int non_pivotal_cols, const Vector &b);
+    static Vector retrieve(const std::vector<bool> &isPivotal, int non_pivotal_col, const Vector &b);
 public:
     /**
      * @brief Function to solve the system Ax = b. 
