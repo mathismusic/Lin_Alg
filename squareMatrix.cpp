@@ -1,6 +1,6 @@
 #include "squareMatrix.h"
 
-SquareMatrix::SquareMatrix(int m, bool Identity=false): Matrix{m,m}
+SquareMatrix::SquareMatrix(int m, bool Identity): Matrix{m,m}
 {
     if (Identity)
         for (int i = 0; i < m; i++) 
