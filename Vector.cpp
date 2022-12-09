@@ -149,7 +149,7 @@ Vector operator*(const double &factor, const Vector &v){
     return v * factor;
 }
 
-inline std::ostream& operator<<(std::ostream &ost, const Vector &v){
+std::ostream& operator<<(std::ostream &ost, const Vector &v){
     if (v.size() == 0){
         ost << "[]";
         return ost;
