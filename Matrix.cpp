@@ -1,5 +1,6 @@
 #include<iostream>
 #include "Matrix.h"
+#include "squareMatrix.h"
 using namespace std;
 
 //implement arithmetic operations
@@ -44,7 +45,7 @@ Matrix Matrix::operator *(const Matrix &m){
             }
         }
     }
-    return std::move(product);
+    return product;
 }
 
 Matrix &Matrix::cef(int start_row, int start_col){
@@ -84,6 +85,11 @@ Matrix &Matrix::rcef(int start_row, int start_col){
     return rcef(start_col + 1, start_row + 1);
 }
 
+Matrix Matrix::extend_to_basis(bool modify){
+    Matrix res = this->augment(SquareMatrix(order().first, true));
+    return res.GramSchmidt();
+}
+
 Matrix Matrix::GramSchmidt(bool modify){
     Matrix res;
     for (int i = 0; i < order().second; i++){ //recheck
@@ -92,16 +98,14 @@ Matrix Matrix::GramSchmidt(bool modify){
         {
             vn-=(vn.dot(k))*k;
         }
-        try{
+        if (!vn.isZero()){
             vn.normalized(true);
+            res.mat.push_back(vn);
         }
-        catch(...)
-        {}
-        res.mat.push_back(vn);
     }
     if (modify)
         *this = res;
-    return std::move(res);
+    return res;
 }
 
 inline void Matrix::Mj(int j, double c, bool columnOperation){

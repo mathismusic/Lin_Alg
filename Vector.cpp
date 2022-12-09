@@ -1,9 +1,15 @@
 #include "Vector.h"
-#include "Vector.h"
-
+#include "Matrix.h"
 #define EPSILON 1e-10
 
 // check the move constructors. Whether or not to add move
+
+Vector::Vector(const Matrix &m){
+    vec.reserve(m.order().first * m.order().second);
+    for(int i{0}; i<m.order().second; i++){
+        vec.insert(std::end(vec), std::begin(m.at(i).vec), std::end(m.at(i).vec));
+    }
+}
 
 // Arithmetic operations
 Vector Vector::operator + (const Vector &v) const
@@ -140,7 +146,7 @@ Vector Vector::set_component_to_1(int index, bool modify){
             res[i] = at(i)/at(index);
         if (modify)
             *this = res;
-        return std::move(res);
+        return res;
 }
 
 // ===================== Global functions ============================= //

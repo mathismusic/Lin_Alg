@@ -6,6 +6,8 @@
 #include <exception>
 #include "Vector.h"
 
+#pragma once
+
 // General:
 // change ref to not scale to 1.
 // functions to perform ERMs
@@ -137,7 +139,7 @@ public:
                 m.at(j,i) = at(i,j);
         if(modify)
             *this = m;
-        return std::move(m);
+        return m;
     }
     /**
      * @brief Returns one possible column echelon form of the given matrix
@@ -150,7 +152,7 @@ public:
         res.cef(0, 0);
         if (modify) 
             *this = res;
-        return std::move(res); 
+        return res; 
     }
     /* to test */
     /**
@@ -166,7 +168,7 @@ public:
         }
         Matrix res(*this);
         res.cef(0, 0);
-        return std::move(res); 
+        return res; 
     }
 protected: //change to private if not needed
     Matrix &cef(int start_row, int start_col);
@@ -182,7 +184,7 @@ public:
         res.rcef(0, 0);
         if (modify) 
             *this = res;
-        return std::move(res); 
+        return res; 
     }
 protected: //change to private if not needed
     Matrix &rcef(int start_row, int start_col);
@@ -203,7 +205,7 @@ public:
         res.rcef(0, 0).transpose(true);
         if (modify)
             *this = res;
-        return std::move(res);
+        return res;
     }
 
     Matrix augment_modify(const Matrix &other){
@@ -224,6 +226,9 @@ public:
             res.mat.push_back(col);
         return res;
     }
+
+    // TODO documentation
+    Matrix extend_to_basis(bool modify=false);
 
     /**
      * @brief Runs the Gram-Schmidt algorithm on the columns of a copy of the given matrix.

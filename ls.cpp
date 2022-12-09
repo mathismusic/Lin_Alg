@@ -1,6 +1,6 @@
 #include "ls.h"
 
-std::vector<Vector> LS_Solver::solve(const Matrix &A, const Vector &b){
+std::pair<Vector, std::vector<Vector>> LS_Solver::solve(const Matrix &A, const Vector &b){
     Matrix Ab = A.augment(b);
     Ab.rref(true);
     std::vector<bool> isPivotal(Ab.order().second); 
@@ -17,26 +17,44 @@ std::vector<Vector> LS_Solver::solve(const Matrix &A, const Vector &b){
         }
     }
 
+    for (int i = 0; i < Ab.order().second; i++) std::cout << isPivotal.at(i) << " ";
+    std::cout << std::endl;
+
     // no solution if the last column is pivotal
-    if (isPivotal.at(Ab.order().first - 1))
-        return std::vector<Vector>();
+    if (isPivotal.at(Ab.order().second - 1))
+        return {Vector(), std::vector<Vector>()};
     std::vector<Vector> ans;
+
+    const Vector& rref_b = Ab.at(Ab.order().second - 1);
     for(int i{0}; i<Ab.order().second - 1; i++){
         if (isPivotal.at(i)) continue;
-        ans.push_back(retrieve(isPivotal, i, b - Ab.at(i)));
+        std::cout << i << std::endl;
+        ans.push_back(retrieve(rref_b, i, Ab.at(i), isPivotal));
     }
-    return ans;
+
+    int n = isPivotal.size() - 1; // isPivotal.size() = number of columns of Ab = n + 1
+    Vector mu(n); // the mean solution
+    // extending rref_b to the right dimension setting all non-pivotal columns to 0.
+    int row = 0;
+    for (int j = 0; j < n; j++){
+        if (isPivotal.at(j)){
+            mu[j] = rref_b[row]; row++;
+        }
+    }
+    return {mu, ans};
 }
 
 
-Vector LS_Solver::retrieve(const std::vector<bool> &isPivotal, int non_pivotal_col, const Vector &b){
-    int n = isPivotal.size(); // isPivotal.size() = number of columns n = size of 'x' as well
+Vector LS_Solver::retrieve(const Vector &b, int non_pivotal_col_index, const Vector &non_pivotal_col, const std::vector<bool> &isPivotal){
+    int n = isPivotal.size() - 1; // isPivotal.size() = number of columns of Ab = n + 1
     Vector res(n);
-    res[non_pivotal_col] = 1;
-    int j = 0;
-    for (int i = 0; i < n; i++){
-        if (isPivotal.at(i)){
-            res[i] = b[j]; j++;
+    res[non_pivotal_col_index] = 1;
+    int row = 0;
+    for (int j = 0; j < n; j++){
+        if (isPivotal.at(j)){
+            res[j] = b[row] - non_pivotal_col[row]; // think about it as x1(Column1) + ... = b. Then we are setting 
+            // x_(non_pivotal_col_index) = 1, and we want xj. If Cj isn't pivotal xj is just 0. Otherwise, (using the fact that the pivotal rows are exactly the first few rows) xj is just (b - non_pivotal_col)[row] where row is the row where the '1' is present in Cj.            
+            row++; // set up for the next pivotal row.
         }
     }
     return res;

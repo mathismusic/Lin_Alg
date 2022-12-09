@@ -6,6 +6,8 @@
 #include <cmath>
 #include <exception>
 
+#pragma once
+
 #define EPSILON 1e-10
 
 // check the move constructors. Whether or not to add
@@ -14,6 +16,8 @@
 
 #define print(x) std::cout << (x);
 #define println(x) std::cout << (x) << std::endl;
+
+class Matrix;
 
 //template <class T>
 class Vector{
@@ -40,12 +44,13 @@ public:
      * @param n the dimension of the vector
      */
     Vector(int n): vec(n){}
+
+    Vector(const Matrix &m);
     
     /**
      * @brief Default destructor
      */
     ~Vector(){}
-
 
     // basic accessor and container operations
 
